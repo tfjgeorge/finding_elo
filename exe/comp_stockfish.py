@@ -1,5 +1,13 @@
 import csv
+import sys
 import re
+
+
+if len(sys.argv) < 3:
+    print 'Usage:'
+    print '$ python comp_stockfish.py 10 1200'
+    print '-- > computes stockfish variables for games 10 to 1200'
+    exit()
 
 file_stockfish = open('../data/stockfish.csv', 'r')
 csv_file_games = open('../data/data_uci.pgn', 'r')
@@ -92,13 +100,15 @@ def compute_stockfish(position):
     return o
 
 
-f_output = open('output_stockfish.txt','w')
-for i in range(25000):
+r = range(int(sys.argv[1]), int(sys.argv[2]))
+
+f_output = open('output_stockfish_%.5d_%.5d.txt' % (int(sys.argv[1]), int(sys.argv[2])) ,'w')
+for i in r:
     start = time.time()
     game = games_training[i]
 
-    f_output.write('Game %d\n')
-    f_output.write('Current date: %d' % int(time.time()))
+    f_output.write('Game %d\n' % i)
+    f_output.write('Current date: %d\n' % int(time.time()))
 
     game_s = ''
     print game
