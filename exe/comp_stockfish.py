@@ -57,7 +57,7 @@ import subprocess
 import time
 import json
 
-command = 'position startpos moves '
+command = 'position startpos moves'
 
 path_stockfish = '/home/tfjgeorge/kaggle/chess/stockfish/stockfish-5-linux/Linux/stockfish_14053109_x64'
 
@@ -65,10 +65,11 @@ def compute_stockfish(position):
     p = subprocess.Popen(path_stockfish, bufsize=1, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     p.stdin.write('setoption name MultiPV value 10\n')
     p.stdin.write(command + position + '\n')
+    print command + position + '\n'
     p.stdin.write('go depth 15\n')
 
     o = []
-    for i in range(20):
+    for i in range(15):
         o.append([{},{},{},{},{},{},{},{},{},{}])
 
     start = time.time()
@@ -99,8 +100,9 @@ for i in range(25000):
     f_output.write('Game %d\n')
     f_output.write('Current date: %d' % int(time.time()))
 
-    game_s = command
-    for move in game:
+    game_s = ''
+    print game
+    for move in game['game_uci']:
         game_s += ' ' + move
 
         f_output.write(json.dumps(compute_stockfish(game_s)))
