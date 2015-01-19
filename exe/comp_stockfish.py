@@ -9,7 +9,7 @@ if len(sys.argv) < 3:
     print '-- > computes stockfish variables for games 10 to 1200'
     exit()
 
-path_stockfish = '/home/tfjgeorge_gmail_com/finding_elo/stockfish/stockfish-5-linux/Linux/stockfish_14053109_x64_modern'
+path_stockfish = '../stockfish/stockfish-5-linux/Linux/stockfish_14053109_x64_modern'
 file_stockfish = open('../data/stockfish.csv', 'r')
 csv_file_games = open('../data/data_uci.pgn', 'r')
 games = []
