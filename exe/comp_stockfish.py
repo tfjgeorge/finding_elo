@@ -100,7 +100,7 @@ def compute_stockfish(position):
     return o
 
 
-r = range(int(sys.argv[1]), int(sys.argv[2]))
+r = range(int(sys.argv[1]), int(sys.argv[2])+1)
 
 f_output = open('output_stockfish_%.5d_%.5d.txt' % (int(sys.argv[1]), int(sys.argv[2])) ,'w')
 for i in r:
