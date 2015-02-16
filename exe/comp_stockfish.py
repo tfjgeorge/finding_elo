@@ -57,6 +57,7 @@ games_training = games[0:25000]
 games_test = games[25000:]
 
 import subprocess
+import pexpect
 import time
 import json
 
@@ -95,7 +96,8 @@ def compute_stockfish(position):
 
 while True:
     n = int(subprocess.check_output(['wget','-O','-','tfjgeorge.com:5000/get']))
-    f_output = open('output_stockfish_%.5d.txt' % (n,) ,'w')
+    f_name = 'output_stockfish_%.5d.txt' % (n,)
+    f_output = open(f_name ,'w')
 
     start = time.time()
     game = games[n]
@@ -114,6 +116,11 @@ while True:
     t_total = int(time.time() - start)
     f_output.write('- Computing time: %d\n' % int(time.time() - start))
     f_output.write('---\n')
+
+    ssh = pexpect.spawn('scp %s kaggle@tfjgeorge.com:~' % f_name)
+    ssh.expect('.*password:')
+    ssh.sendline('elo')
+    ssh.expect(pexpect.EOF)
 
     print 'Game', n
     print 'Time', t_total
