@@ -3,12 +3,6 @@ import sys
 import re
 
 
-if len(sys.argv) < 3:
-    print 'Usage:'
-    print '$ python comp_stockfish.py 10 1200'
-    print '-- > computes stockfish variables for games 10 to 1200'
-    exit()
-
 path_stockfish = '../stockfish/stockfish-5-linux/Linux/stockfish_14053109_x64_modern'
 file_stockfish = open('../data/stockfish.csv', 'r')
 csv_file_games = open('../data/data_uci.pgn', 'r')
@@ -99,15 +93,14 @@ def compute_stockfish(position):
 
     return o
 
+while True:
+    n = int(subprocess.check_output(['wget','-O','-','tfjgeorge.com:5000/get']))
+    f_output = open('output_stockfish_%.5d.txt' % (n,) ,'w')
 
-r = range(int(sys.argv[1]), int(sys.argv[2]))
-
-f_output = open('output_stockfish_%.5d_%.5d.txt' % (int(sys.argv[1]), int(sys.argv[2])) ,'w')
-for i in r:
     start = time.time()
-    game = games_training[i]
+    game = games[n]
 
-    f_output.write('Game %d\n' % i)
+    f_output.write('Game %d\n' % n)
     f_output.write('Current date: %d\n' % int(time.time()))
 
     game_s = ''
@@ -122,6 +115,6 @@ for i in r:
     f_output.write('- Computing time: %d\n' % int(time.time() - start))
     f_output.write('---\n')
 
-    print 'Game', i
+    print 'Game', n
     print 'Time', t_total
 
