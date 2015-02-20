@@ -117,10 +117,13 @@ while True:
     f_output.write('- Computing time: %d\n' % int(time.time() - start))
     f_output.write('---\n')
 
-    ssh = pexpect.spawn('scp %s kaggle@tfjgeorge.com:~' % f_name)
-    ssh.expect('.*password:')
-    ssh.sendline('elo')
-    ssh.expect(pexpect.EOF)
+    try:
+        ssh = pexpect.spawn('scp %s kaggle@tfjgeorge.com:~' % f_name)
+        ssh.expect('.*password:')
+        ssh.sendline('elo')
+        ssh.expect(pexpect.EOF)
+    except:
+        pass
 
     print 'Game', n
     print 'Time', t_total
