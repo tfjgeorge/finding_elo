@@ -95,7 +95,10 @@ def compute_stockfish(position):
     return o
 
 while True:
-    n = int(subprocess.check_output(['wget','-O','-','tfjgeorge.com/kaggle/get']))
+    try:
+        n = int(subprocess.check_output(['wget','-O','-','tfjgeorge.com/kaggle/get']))
+    except:
+        continue
     f_name = 'output_stockfish_%.5d.txt' % (n,)
     f_output = open(f_name ,'w')
 
